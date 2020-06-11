@@ -1,0 +1,22 @@
+{
+    "name": "your-company/your-plugin",
+    "description": "Your plugin description",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Osen Concepts",
+            "email": "hi@osen.co.ke"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "osen/wp-settings": "^1.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "Your\\Namespace\\": "src/"
+        }
+    }
+}
