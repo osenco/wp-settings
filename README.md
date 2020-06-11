@@ -15,7 +15,7 @@ require_once __DIR__.'/vendor/autoload.php';
 ### Usage
 See [this sample class](src/Example.php) for example usage.
 
-## The OOP PLugin Base
+## The OOP Plugin Base
 You can use this package as a base to create your plugin or theme in a purely OOP PHP implementation. Just install it as above and create an `src` directory in your theme/plugin directory that will house all your namespaced code.
 
 ### Autoloading Classes
