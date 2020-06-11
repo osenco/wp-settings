@@ -1,4 +1,6 @@
 <?php
+namespace Osen\Wp\Settings;
+
 class Base
 {
 
