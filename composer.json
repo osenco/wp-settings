@@ -1,0 +1,21 @@
+{
+    "name": "osenco/wp-settings",
+    "description": "An interactive base to create your Wordpress settings page, and a foundation for your OOP plugins.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Osen Concepts",
+            "email": "hi@osen.co.ke"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Osen\\Wp\\Settings\\": "src/"
+        }
+    }
+}
