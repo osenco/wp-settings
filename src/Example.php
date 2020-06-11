@@ -8,11 +8,11 @@
  * @author Osen Concepts < hi@osen.co.ke >
  */
 
-namespace My\Namespace;
+namespace Your\Namespace;
 
 use Osen\Wp\Settings\Base;
 
-class MySettings
+class Example
 {
 
     private $settings;
