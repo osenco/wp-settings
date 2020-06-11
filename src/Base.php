@@ -113,7 +113,7 @@ class Base
                 $callback = null;
             }
 
-            add_settings_section($section['id'], $section['title'], $callback, $section['id']);
+            add_settings_section($section['id'], (isset($section['heading']) ? $section['heading'] : $section['title']), $callback, $section['id']);
         }
 
         //register settings fields
@@ -141,6 +141,9 @@ class Base
                     'min'               => isset($option['min']) ? $option['min'] : '',
                     'max'               => isset($option['max']) ? $option['max'] : '',
                     'step'              => isset($option['step']) ? $option['step'] : '',
+                    'cols'              => isset($option['cols']) ? $option['cols'] : '',
+                    'rows'              => isset($option['rows']) ? $option['rows'] : '',
+                    'class'             => isset($option['class']) ? $option['class'] : '',
                 );
 
                 add_settings_field("{$section}[{$name}]", $label, $callback, $section, $section, $args);
@@ -315,12 +318,13 @@ class Base
      */
     function callback_textarea($args)
     {
-
         $value       = esc_textarea($this->get_option($args['id'], $args['section'], $args['std']));
         $size        = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
+        $rows        = isset($args['rows']) && !is_null($args['rows']) ? $args['rows'] : '5';
+        $cols        = isset($args['cols']) && !is_null($args['cols']) ? $args['cols'] : '55';
         $placeholder = empty($args['placeholder']) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
-        $html        = sprintf('<textarea rows="5" cols="55" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $size, $args['section'], $args['id'], $placeholder, $value);
+        $html        = sprintf('<textarea rows="%6$s" cols="%7$s" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $size, $args['section'], $args['id'], $placeholder, $value, $rows, $cols);
         $html        .= $this->get_field_description($args);
 
         echo $html;
