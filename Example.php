@@ -8,7 +8,7 @@
  * @author Osen Concepts < hi@osen.co.ke >
  */
 
-namespace Your\Namespace;
+namespace YourNamespace;
 
 use Osen\Wp\Settings\Base;
 

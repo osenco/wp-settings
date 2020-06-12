@@ -1,4 +1,5 @@
 <?php
+
 namespace Osen\Wp\Settings;
 
 class Base
@@ -77,7 +78,8 @@ class Base
             'name'  => '',
             'label' => '',
             'desc'  => '',
-            'type'  => 'text'
+            'type'  => 'text',
+            'class'  => 'text'
         );
 
         $arg = wp_parse_args($field, $defaults);
@@ -132,7 +134,7 @@ class Base
                     'desc'              => isset($option['desc']) ? $option['desc'] : '',
                     'name'              => $label,
                     'section'           => $section,
-                    'size'              => isset($option['size']) ? $option['size'] : null,
+                    'class'              => isset($option['class']) ? $option['class'] : null,
                     'options'           => isset($option['options']) ? $option['options'] : '',
                     'std'               => isset($option['default']) ? $option['default'] : '',
                     'sanitize_callback' => isset($option['sanitize_callback']) ? $option['sanitize_callback'] : '',
@@ -142,8 +144,7 @@ class Base
                     'max'               => isset($option['max']) ? $option['max'] : '',
                     'step'              => isset($option['step']) ? $option['step'] : '',
                     'cols'              => isset($option['cols']) ? $option['cols'] : '',
-                    'rows'              => isset($option['rows']) ? $option['rows'] : '',
-                    'class'             => isset($option['class']) ? $option['class'] : '',
+                    'rows'              => isset($option['rows']) ? $option['rows'] : ''
                 );
 
                 add_settings_field("{$section}[{$name}]", $label, $callback, $section, $section, $args);
@@ -181,11 +182,11 @@ class Base
     {
 
         $value       = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
-        $size        = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
+        $class        = isset($args['class']) && !is_null($args['class']) ? $args['class'] : 'regular';
         $type        = isset($args['type']) ? $args['type'] : 'text';
         $placeholder = empty($args['placeholder']) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
-        $html        = sprintf('<input type="%1$s" class="%2$s-text" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder);
+        $html        = sprintf('<input type="%1$s" class="%2$s" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s/>', $type, $class, $args['section'], $args['id'], $value, $placeholder);
         $html       .= $this->get_field_description($args);
 
         echo $html;
@@ -209,14 +210,14 @@ class Base
     function callback_number($args)
     {
         $value       = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
-        $size        = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
+        $class        = isset($args['class']) && !is_null($args['class']) ? $args['class'] : 'regular';
         $type        = isset($args['type']) ? $args['type'] : 'number';
         $placeholder = empty($args['placeholder']) ? '' : ' placeholder="' . $args['placeholder'] . '"';
         $min         = ($args['min'] == '') ? '' : ' min="' . $args['min'] . '"';
         $max         = ($args['max'] == '') ? '' : ' max="' . $args['max'] . '"';
         $step        = ($args['step'] == '') ? '' : ' step="' . $args['step'] . '"';
 
-        $html        = sprintf('<input type="%1$s" class="%2$s-number" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s%8$s%9$s/>', $type, $size, $args['section'], $args['id'], $value, $placeholder, $min, $max, $step);
+        $html        = sprintf('<input type="%1$s" class="%2$s" id="%3$s[%4$s]" name="%3$s[%4$s]" value="%5$s"%6$s%7$s%8$s%9$s/>', $type, $class, $args['section'], $args['id'], $value, $placeholder, $min, $max, $step);
         $html       .= $this->get_field_description($args);
 
         echo $html;
@@ -298,8 +299,8 @@ class Base
     {
 
         $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
-        $size  = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
-        $html  = sprintf('<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $size, $args['section'], $args['id']);
+        $class  = isset($args['class']) && !is_null($args['class']) ? $args['class'] : 'regular';
+        $html  = sprintf('<select class="%1$s" name="%2$s[%3$s]" id="%2$s[%3$s]">', $class, $args['section'], $args['id']);
 
         foreach ($args['options'] as $key => $label) {
             $html .= sprintf('<option value="%s"%s>%s</option>', $key, selected($value, $key, false), $label);
@@ -319,12 +320,12 @@ class Base
     function callback_textarea($args)
     {
         $value       = esc_textarea($this->get_option($args['id'], $args['section'], $args['std']));
-        $size        = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
+        $class        = isset($args['class']) && !is_null($args['class']) ? $args['class'] : 'regular';
         $rows        = isset($args['rows']) && !is_null($args['rows']) ? $args['rows'] : '5';
         $cols        = isset($args['cols']) && !is_null($args['cols']) ? $args['cols'] : '55';
         $placeholder = empty($args['placeholder']) ? '' : ' placeholder="' . $args['placeholder'] . '"';
 
-        $html        = sprintf('<textarea rows="%6$s" cols="%7$s" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $size, $args['section'], $args['id'], $placeholder, $value, $rows, $cols);
+        $html        = sprintf('<textarea rows="%6$s" cols="%7$s" class="%1$s" id="%2$s[%3$s]" name="%2$s[%3$s]"%4$s>%5$s</textarea>', $class, $args['section'], $args['id'], $placeholder, $value, $rows, $cols);
         $html        .= $this->get_field_description($args);
 
         echo $html;
@@ -350,9 +351,9 @@ class Base
     {
 
         $value = $this->get_option($args['id'], $args['section'], $args['std']);
-        $size  = isset($args['size']) && !is_null($args['size']) ? $args['size'] : '500px';
+        $class  = isset($args['class']) && !is_null($args['class']) ? $args['class'] : '500px';
 
-        echo '<div style="max-width: ' . $size . ';">';
+        echo '<div style="max-width: ' . $class . ';">';
 
         $editor_settings = array(
             'teeny'         => true,
@@ -380,11 +381,11 @@ class Base
     {
 
         $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
-        $size  = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
+        $class  = isset($args['class']) && !is_null($args['class']) ? $args['class'] : 'regular';
         $id    = $args['section']  . '[' . $args['id'] . ']';
         $label = isset($args['options']['button_label']) ? $args['options']['button_label'] : __('Choose File');
 
-        $html  = sprintf('<input type="text" class="%1$s-text wpsa-url" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value);
+        $html  = sprintf('<input type="text" class="%1$s wpsa-url" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $class, $args['section'], $args['id'], $value);
         $html  .= '<input type="button" class="button wpsa-browse" value="' . $label . '" />';
         $html  .= $this->get_field_description($args);
 
@@ -400,9 +401,9 @@ class Base
     {
 
         $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
-        $size  = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
+        $class  = isset($args['class']) && !is_null($args['class']) ? $args['class'] : 'regular';
 
-        $html  = sprintf('<input type="password" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value);
+        $html  = sprintf('<input type="password" class="%1$s" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $class, $args['section'], $args['id'], $value);
         $html  .= $this->get_field_description($args);
 
         echo $html;
@@ -417,9 +418,9 @@ class Base
     {
 
         $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
-        $size  = isset($args['size']) && !is_null($args['size']) ? $args['size'] : 'regular';
+        $class  = isset($args['class']) && !is_null($args['class']) ? $args['class'] : 'regular';
 
-        $html  = sprintf('<input type="text" class="%1$s-text wp-color-picker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" />', $size, $args['section'], $args['id'], $value, $args['std']);
+        $html  = sprintf('<input type="text" class="%1$s wp-color-picker-field" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s" data-default-color="%5$s" />', $class, $args['section'], $args['id'], $value, $args['std']);
         $html  .= $this->get_field_description($args);
 
         echo $html;
@@ -433,7 +434,6 @@ class Base
      */
     function callback_pages($args)
     {
-
         $dropdown_args = array(
             'selected' => esc_attr($this->get_option($args['id'], $args['section'], $args['std'])),
             'name'     => $args['section'] . '[' . $args['id'] . ']',
